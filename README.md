@@ -86,6 +86,20 @@ fastapi run api.py --port 8080
 🔗 Available at : http://127.0.0.1:8080
 
 ## 🛠️ Usage
+
+**⚡️ Quick Start :**
+```
+import suno
+client = suno.Suno(cookie='YOUR_COOKIE_HERE')
+
+# Generate a song
+song = client.generate(prompt="A serene landscape", wait_audio=True)
+
+# Download generated song
+file_path = client.download(song=song)
+print(f"Song downloaded to: {file_path}")
+```
+
 ### 📚 Library Methods
 
 `generate()`
