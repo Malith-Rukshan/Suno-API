@@ -1,0 +1,25 @@
+# Byte-compiled
+__pycache__/
+
+# Distribution / packaging
+build/
+dist/
+*.egg
+*.egg-info/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb
+
+# Suno-Downloads
+.downloads/
+
+# Desktop Services Store
+.DS_Store
+
+# PyPI setup.py
+setup.py
+
+# Python venv
+.venv
+helper.txt
