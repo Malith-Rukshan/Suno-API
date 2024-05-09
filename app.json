@@ -1,0 +1,20 @@
+{
+    "name": "Suno-API",
+    "description": "SunoAI API is an unofficial REST API for interacting with Suno AI's music generator.",
+    "repository": "https://github.com/Malith-Rukshan/Suno-API",
+    "keywords": [
+        "ai music",
+        "suno ai",
+        "rest api"
+    ],
+    "env": {
+        "SUNO_COOKIE": {
+            "description": "Sign up on the suno.ai website and obtain your cookie. Refer README.md file to tutorial."
+        }
+    },
+    "buildpacks": [
+        {
+            "url": "heroku/python"
+        }
+    ]
+}
