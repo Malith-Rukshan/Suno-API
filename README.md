@@ -71,6 +71,7 @@ Set `SUNO_COOKIE` as an Environmental variable before deploy. -  [Instructions](
 [![Deploy with heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/Malith-Rukshan/Suno-API)
 
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/IdlBP8?referralCode=jC4ZQ_)
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
 </br>
 
