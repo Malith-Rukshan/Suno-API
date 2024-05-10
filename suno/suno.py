@@ -126,7 +126,8 @@ class Suno():
         """Helper method to wait for audio processing to complete."""
         start_time = time.time()
         last_clips = []
-        while time.time() - start_time < 100:  # Timeout after 100 seconds
+        time.sleep(random.uniform(10, 20))  # Wait
+        while time.time() - start_time < 200:  # Timeout after 200 seconds
             clips = self.get_songs(song_ids)
             all_completed = all(
                 audio.status in ['streaming', 'complete'] for audio in clips)
