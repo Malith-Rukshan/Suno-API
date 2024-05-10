@@ -151,12 +151,12 @@ class Suno():
         logger.info("Generated Audio Successfully ✅")
         return last_clips
 
-    def get_songs(self, song_ids: str = None) -> List[Clip]:
+    def get_songs(self, song_ids: List[str] | str = None) -> List[Clip]:
         """
         Retrieve songs from the library. If song IDs are provided, fetches specific songs; otherwise, retrieves a general list of songs.
 
         Parameters:
-        - song_ids (str): A list of song IDs to retrieve specific songs. If None, the function fetches a general list of songs from the library. Split by ",".
+        - song_ids (str or List[str]): A list of song IDs to retrieve specific songs. If None, the function fetches a general list of songs from the library. Split by "," if str.
 
         Returns:
         List[Clip]: A list of Clip objects representing the songs. Each Clip contains detailed information such as song status, URL, and metadata.
@@ -168,7 +168,11 @@ class Suno():
         self._keep_alive()  # Ensure session is active
         url = f"{Suno.BASE_URL}/api/feed/"
         if song_ids:
-            url += f"?ids={song_ids}"
+            if isinstance(song_ids, list):
+                songIds = ",".join(song_ids)
+            else:
+                songIds = song_ids
+            url += f"?ids={songIds}"
         logger.info("Getting Songs Info...")
         response = self.client.get(url)  # Call API
         logger.info(response.text)
