@@ -76,6 +76,14 @@ class Suno():
         # Set New Token to Headers
         self.client.headers['Authorization'] = f"Bearer {new_token}"
 
+    def _cehck_error(self, response):
+        try:
+            resp = response.json()
+            if resp['detail']:
+                raise Exception(resp['detail'])
+        except:
+            pass
+
     # Generate Songs
     def generate(self, prompt, is_custom, tags="", title="", make_instrumental=False, wait_audio=False) -> List[Clip]:
         """
@@ -110,6 +118,8 @@ class Suno():
             f"{Suno.BASE_URL}/api/generate/v2/", json=payload)
         logger.info(response.text)
 
+        self._cehck_error(response)
+
         if response.status_code != 200:
             logger.error("Audio Generate Failed ⁉️")
             raise Exception(f"Error response: {response.text}")
@@ -128,13 +138,15 @@ class Suno():
         last_clips = []
         time.sleep(random.uniform(10, 20))  # Wait
         while time.time() - start_time < 200:  # Timeout after 200 seconds
-            clips = self.get_songs(song_ids)
-            all_completed = all(
-                audio.status in ['streaming', 'complete'] for audio in clips)
-            if all_completed:
-                logger.info("Generated Audio Successfully ✅")
-                return clips
-            last_clips = clips
+            try:
+                clips = self.get_songs(song_ids)
+                all_completed = all(
+                    audio.status in ['streaming', 'complete'] for audio in clips)
+                if all_completed:
+                    logger.info("Generated Audio Successfully ✅")
+                    return clips
+                last_clips = clips
+            except:pass
             time.sleep(random.uniform(3, 6))  # Wait with variation
             self._keep_alive(True)
         logger.info("Generated Audio Successfully ✅")
@@ -161,6 +173,7 @@ class Suno():
         logger.info("Getting Songs Info...")
         response = self.client.get(url)  # Call API
         logger.info(response.text)
+        self._cehck_error(response)
         return response_to_clips(response.json())
 
     def get_song(self, id: str) -> Clip:
@@ -178,6 +191,7 @@ class Suno():
         response = self.client.get(
             f"{Suno.BASE_URL}/api/feed/?ids={id}")  # Call API
         logger.info(response.text)
+        self._cehck_error(response)
         return create_clip_from_data(response.json()[0])
 
     def get_credits(self) -> CreditsInfo:
@@ -187,6 +201,7 @@ class Suno():
         response = self.client.get(
             f"{Suno.BASE_URL}/api/billing/info/")  # Call API
         logger.info(response.text)
+        self._cehck_error(response)
         if response.status_code == 200:
             data = response.json()
             result = {
