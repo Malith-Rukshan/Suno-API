@@ -6,7 +6,7 @@
 
 [![PyPI Package](https://img.shields.io/badge/PyPi-Library-1cd760?logo=pypi&style=flat)](https://pypi.org/project/SunoAI/)
 [![Updates Telegram Channel](https://img.shields.io/badge/Updates-@SunoAPI-blue?logo=telegram&style=flat)](https://t.me/SunoAPI)
-[![Example Usage Bot](https://img.shields.io/badge/Example-Telegram--BOT-0066FF?logo=probot&style=flat)](https://t.me/SunoAPI)
+[![Example Usage Bot](https://img.shields.io/badge/Example-Telegram--BOT-0066FF?logo=probot&style=flat)](https://github.com/Malith-Rukshan/Suno-AI-BOT)
 
 </div>
 <h4 align="center">✨ Python API Library for Suno AI — Create Music with Generative AI ! 🚀</h4>
@@ -89,7 +89,7 @@ fastapi run api.py --port 8080
 
 ## 🛠️ Usage
 
-[![Example Usage Bot](https://img.shields.io/badge/Example-Telegram--BOT-0066FF?logo=probot&style=flat)](https://t.me/SunoAPI)
+[![Example Usage Bot](https://img.shields.io/badge/Example-Telegram--BOT-0066FF?logo=probot&style=flat)](https://github.com/Malith-Rukshan/Suno-AI-BOT)
 
 **⚡️ Quick Start :**
 ```
