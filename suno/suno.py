@@ -13,7 +13,7 @@ from .models import Clip, CreditsInfo
 from .utils import create_clip_from_data, response_to_clips, generate_fake_useragent
 
 # Setup basic logging configuration
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("SunoAI")
 logging.basicConfig(level=logging.INFO)
 
 # Fetch the cookie from environment variables; used for authentication
@@ -77,15 +77,15 @@ class Suno():
         self.client.headers['Authorization'] = f"Bearer {new_token}"
 
     # Generate Songs
-    def generate(self, prompt, is_custom, tags=None, title=None, make_instrumental=False, wait_audio=False) -> List[Clip]:
+    def generate(self, prompt, is_custom, tags="", title="", make_instrumental=False, wait_audio=False) -> List[Clip]:
         """
         Generate songs based on the provided parameters and optionally wait for the audio to be ready.
 
         Parameters:
         - prompt (str): If is_custom=True, this should be the lyrics of the song. If False, it should be a brief description of what the song should be about.
         - is_custom (bool): Determines whether the song should be generated from custom lyrics (True) or from a description (False).
-        - tags (Optional[str]): Describes the desired voice type or characteristics (e.g., "English male voice"). Default is None.
-        - title (Optional[str]): The title for the generated music. Default is None.
+        - tags (Optional[str]): Describes the desired voice type or characteristics (e.g., "English male voice"). Default is "".
+        - title (Optional[str]): The title for the generated music. Default is "".
         - make_instrumental (Optional[bool]): If True, generates an instrumental version of the track. Default is False.
         - wait_audio (bool): If True, waits until the audio URLs are ready and returns them. If False, returns the IDs of the songs being processed, which can be used to fetch the songs later using get_song.
 
@@ -108,9 +108,10 @@ class Suno():
 
         response = self.client.post(
             f"{Suno.BASE_URL}/api/generate/v2/", json=payload)
+        logger.info(response.text)
 
         if response.status_code != 200:
-            logger.info("Audio Generate Failed ⁉️")
+            logger.error("Audio Generate Failed ⁉️")
             raise Exception(f"Error response: {response.text}")
 
         song_ids = [audio['id'] for audio in response.json()['clips']]
@@ -158,6 +159,7 @@ class Suno():
             url += f"?ids={song_ids}"
         logger.info("Getting Songs Info...")
         response = self.client.get(url)  # Call API
+        logger.info(response.text)
         return response_to_clips(response.json())
 
     def get_song(self, id: str) -> Clip:
@@ -174,6 +176,7 @@ class Suno():
         logger.info("Getting Song Info...")
         response = self.client.get(
             f"{Suno.BASE_URL}/api/feed/?ids={id}")  # Call API
+        logger.info(response.text)
         return create_clip_from_data(response.json()[0])
 
     def get_credits(self) -> CreditsInfo:
@@ -182,6 +185,7 @@ class Suno():
         logger.info("Credits Info...")
         response = self.client.get(
             f"{Suno.BASE_URL}/api/billing/info/")  # Call API
+        logger.info(response.text)
         if response.status_code == 200:
             data = response.json()
             result = {
