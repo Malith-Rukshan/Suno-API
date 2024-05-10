@@ -94,7 +94,7 @@ import suno
 client = suno.Suno(cookie='YOUR_COOKIE_HERE')
 
 # Generate a song
-songs = client.generate(prompt="A serene landscape", wait_audio=True)
+songs = client.generate(prompt="A serene landscape", is_custom=False, wait_audio=True)
 
 # Download generated songs
 for song in songs:
