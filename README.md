@@ -94,11 +94,12 @@ import suno
 client = suno.Suno(cookie='YOUR_COOKIE_HERE')
 
 # Generate a song
-song = client.generate(prompt="A serene landscape", wait_audio=True)
+songs = client.generate(prompt="A serene landscape", wait_audio=True)
 
-# Download generated song
-file_path = client.download(song=song)
-print(f"Song downloaded to: {file_path}")
+# Download generated songs
+for song in songs:
+    file_path = client.download(song=song)
+    print(f"Song downloaded to: {file_path}")
 ```
 
 ### 📚 Library Methods
