@@ -338,6 +338,9 @@ This project is distributed under the MIT License. This license allows everyone 
 ## 🌟 Support and Community
 If you found this project helpful, **don't forget to give it a ⭐ on GitHub.** This helps others find and use the project too! 🫶
 
+#### 💰 Support Me
+<a href="https://ko-fi.com/malith" target="_blank" alt="KoFi"><img height="40" src="https://az743702.vo.msecnd.net/cdn/kofi3.png"/></a>
+
 Join our Telegram channels, 
 
 - [@SingleDevelopers](https://t.me/SingleDevelopers), for more amazing projects and updates ✓
