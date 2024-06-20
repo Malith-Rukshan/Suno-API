@@ -54,7 +54,7 @@ app = fastapi.FastAPI(
     contact={
         "name": "Malith Rukshan",
         "url": "https://MalithRukshan.t.me",
-        "email": "singledeveloper.lk@gmail.com",
+        "email": "hello@malith.dev",
     }
 )
 
