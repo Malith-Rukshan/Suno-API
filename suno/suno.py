@@ -9,7 +9,7 @@ import logging
 from typing import List, Optional
 import requests
 
-from .models import Clip, CreditsInfo
+from .models import ModelVersions, Clip, CreditsInfo
 from .utils import create_clip_from_data, response_to_clips, generate_fake_useragent
 
 # Setup basic logging configuration
@@ -25,8 +25,14 @@ class Suno():
     BASE_URL = 'https://studio-api.suno.ai'
     CLERK_BASE_URL = 'https://clerk.suno.com'
 
-    def __init__(self, cookie: Optional[str] = None) -> None:
-        """Initialize the Suno client with optional cookie. If no cookie is provided, it uses the one from the environment."""
+    def __init__(self, cookie: Optional[str] = None, model_version: str = ModelVersions.CHIRP_V3_5) -> None:
+        """
+        Initialize the Suno client.
+
+        Parameters:
+        - cookie (Optional[str]): Optional. The authentication cookie for the Suno API. If not provided, it will use the cookie from the environment variable SUNO_COOKIE.
+        - model_version (str): Optional. The model version to use for generating audio. Available models: `chirp-v3-5`, `chirp-v3-0`, `chirp-v2-0` default is `chirp-v3-5`.
+        """
         if cookie is None:
             cookie = COOKIE
         if cookie == "":
@@ -41,6 +47,11 @@ class Suno():
         self.client.headers.update(headers)
         self.current_token = None
         self.sid = None
+        
+        if model_version not in ModelVersions.AVAILABLE_MODELS:
+            raise ValueError(f"Invalid model version. Available models are: {ModelVersions.AVAILABLE_MODELS}")
+
+        self.model_version = model_version
 
         self._get_session_id()  # Retrieve session ID upon initialization
         self._keep_alive()      # Keep session alive
@@ -85,7 +96,7 @@ class Suno():
             pass
 
     # Generate Songs
-    def generate(self, prompt, is_custom, tags="", title="", make_instrumental=False, wait_audio=False) -> List[Clip]:
+    def generate(self, prompt, is_custom, tags="", title="", make_instrumental=False, wait_audio=False, model_version: Optional[str] = None) -> List[Clip]:
         """
         Generate songs based on the provided parameters and optionally wait for the audio to be ready.
 
@@ -96,15 +107,20 @@ class Suno():
         - title (Optional[str]): The title for the generated music. Default is "".
         - make_instrumental (Optional[bool]): If True, generates an instrumental version of the track. Default is False.
         - wait_audio (bool): If True, waits until the audio URLs are ready and returns them. If False, returns the IDs of the songs being processed, which can be used to fetch the songs later using get_song.
+        - model_version (Optional[str]): The model version to use for generating audio. If not provided, defaults to the model_version provided by Initialization (self.model_version).
 
         Returns:
         List[Clip]: A list of Clip objects containing either song IDs or complete song data, depending on the 'wait_audio' parameter.
         """
         self._keep_alive()
         logger.info("Generating Audio...")
+        
+        if model_version is None:
+            model_version = self.model_version
+            
         payload = {
             "make_instrumental": make_instrumental,
-            "mv": "chirp-v3-0",
+            "mv": model_version,
             "prompt": ""
         }
         if is_custom:

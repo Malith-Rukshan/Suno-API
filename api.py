@@ -4,7 +4,7 @@
 import os
 from typing import List
 from suno import suno
-from suno.models import RequestParams, CreditsInfo, Clip
+from suno.models import RequestParams, CreditsInfo, Clip, ModelVersions
 import fastapi
 from fastapi.responses import RedirectResponse, JSONResponse
 from suno import __version__
@@ -12,7 +12,7 @@ from suno import __version__
 COOKIE = os.getenv("SUNO_COOKIE")
 
 # Initilize Suno API Client
-client = suno.Suno(cookie=COOKIE)
+client = suno.Suno(cookie=COOKIE,model_version=ModelVersions.CHIRP_V3_5)
 
 description = """
 ### Suno AI Unofficial API

@@ -4,6 +4,19 @@
 
 from pydantic import BaseModel, ConfigDict
 
+class ModelVersions:
+    """Class holding available Suno AI model versions.
+    
+    Models:
+    - CHIRP_V3_5: Newest model, better song structure, max 4 minutes.
+    - CHIRP_V3_0: Broad, versatile, max 2 minutes.
+    - CHIRP_V2_0: Vintage Suno model, max 1.3 minutes.
+    """
+    CHIRP_V2_0 = "chirp-v2-0"
+    CHIRP_V3_0 = "chirp-v3-0"
+    CHIRP_V3_5 = "chirp-v3-5"
+    AVAILABLE_MODELS = [CHIRP_V2_0, CHIRP_V3_0, CHIRP_V3_5]
+
 class ClipMetadata(BaseModel):
     tags: str | None = None
     prompt: str | None = None
@@ -89,6 +102,7 @@ class Clip(BaseModel):
 
 
 class RequestParams(BaseModel):
+    model_version: str = ModelVersions.CHIRP_V3_5
     prompt: str
     is_custom: bool = False
     tags: str = ""
@@ -99,6 +113,7 @@ class RequestParams(BaseModel):
     class Config:
         protected_namespaces = ()
         json_schema_extra = {"examples": [{
+            "model_version" : "chirp-v3-5",
             "prompt": "I found a love, for me\nDarling, just dive right in and follow my lead\nWell, I found a girl, beautiful and sweet\nOh, I never knew you were the someone waiting for me\n\n′Cause we were just kids when we fell in love\nNot knowing what it was\nI will not give you up this time\nBut darling, just kiss me slow\nYour heart is all I own\nAnd in your eyes, you're holding mine\n\nBaby, I′m dancing in the dark\nWith you between my arms\nBarefoot on the grass\nListening to our favourite song\nWhen you said you looked a mess\nI whispered underneath my breath\nBut you heard it\nDarling, you look perfect tonight",
             "is_custom": True,
             "tags": "English men voice",

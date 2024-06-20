@@ -48,8 +48,10 @@ Just right click & open Inspect. Filter : `_clerk_js_version`
 Set this cookie as `SUNO_COOKIE` environment variable or initialize the library as shown below.
 
 ```
-import suno
-client = suno.Suno(cookie='YOUR_COOKIE_HERE')
+from suno import Suno, ModelVersions
+client = Suno(
+  cookie='YOUR_COOKIE_HERE',
+  model_version=ModelVersions.CHIRP_V3_5)
 ```
 
 ## 💾 Installation
@@ -93,8 +95,10 @@ fastapi run api.py --port 8080
 
 **⚡️ Quick Start :**
 ```
-import suno
-client = suno.Suno(cookie='YOUR_COOKIE_HERE')
+from suno import Suno, ModelVersions
+client = Suno(
+  cookie='YOUR_COOKIE_HERE',
+  model_version=ModelVersions.CHIRP_V3_5)
 
 # Generate a song
 songs = client.generate(prompt="A serene landscape", is_custom=False, wait_audio=True)
@@ -107,6 +111,11 @@ for song in songs:
 
 ### 📚 Library Methods
 
+`Suno()` <- Initializing
+- <b>Arguments</b>:
+  - cookie (Optional[str]): Optional. The authentication cookie for the Suno API. If not provided, it will use the cookie from the environment variable SUNO_COOKIE.
+  - model_version (str): Optional. The model version to use for generating audio. Default is ModelVersions.CHIRP_V3_5.
+
 `generate()`
 - <b>Arguments</b>:
   - prompt (str): Description or lyrics for the song.
@@ -115,6 +124,7 @@ for song in songs:
   - title (Optional[str]): Title for the generated music.
   - make_instrumental (Optional[bool]): Generates an instrumental version if True.
   - wait_audio (bool): Waits until the audio URLs are ready if True.
+  - model_version (Optional[str]): The model version to use for generating audio. Defaults to the initialization value if not provided.
 - <b>Returns</b>: A list of `Clip` objects containing song data with IDs.
 - <b>Example:</b>
   - **By Description**
@@ -179,6 +189,27 @@ for song in songs:
     file_path = client.download(song=clip)
     print(f"Song downloaded to: {file_path}")
     ```
+### 📝 Available Suno AI Models:
+
+Models provided by Suno AI to Generate music.
+  - **CHIRP_V3_5** - `chirp-v3-5` : Newest model, better song structure, max 4 minutes.
+  - **CHIRP_V3_0** - `chirp-v3-0` : Broad, versatile, max 2 minutes.
+  - **CHIRP_V2_0** - `chirp-v2-0` : Vintage Suno model, max 1.3 minutes.
+  
+  Example How to use:
+  ```
+  from suno import Suno, ModelVersions
+  
+  client = Suno(model_version=ModelVersions.CHIRP_V3_5)
+  ```
+
+  or
+
+  ```
+  from suno import Suno
+
+  client = Suno(model_version='chirp-v3-5')
+  ```
 
 ### 📚 Library Responses
 
@@ -215,6 +246,7 @@ for song in songs:
   - **period** (int): The current billing period for the credits, represented in some form of date or timeframe.
   - **monthly_limit** (int): The total number of credits allocated to the user for the current month.
   - **monthly_usage** (int): The amount of credits used by the user during the current month.
+
 
 ## 🌐 REST API Usage
 
@@ -353,8 +385,3 @@ If you have any questions, feedback, or just want to say hi, you can reach out t
 - Support Group : [@Suno_API](https://t.me/Suno_API)
 
 🧑‍💻 Built with 💖 by [Single Developers </> ](https://t.me/SingleDevelopers)
-
-
-
-
-
