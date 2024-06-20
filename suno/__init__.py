@@ -1,11 +1,12 @@
 from .suno import Suno
-from .models import Clip, CreditsInfo, RequestParams
+from .models import Clip, CreditsInfo, RequestParams, ModelVersions
 
 __all__ = (
     "Suno",
     "Clip",
     "RequestParams",
-    "CreditsInfo"
+    "CreditsInfo",
+    "ModelVersions"
 )
 
 __version__ = "1.0.5"
