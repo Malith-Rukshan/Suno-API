@@ -114,7 +114,7 @@ for song in songs:
 `Suno()` <- Initializing
 - <b>Arguments</b>:
   - cookie (Optional[str]): Optional. The authentication cookie for the Suno API. If not provided, it will use the cookie from the environment variable SUNO_COOKIE.
-  - model_version (str): Optional. The model version to use for generating audio. Default is ModelVersions.CHIRP_V3_5.
+  - model_version (str): Optional. The model version to use for generating audio. Available models: `chirp-v3-5`, `chirp-v3-0`, `chirp-v2-0` default is `chirp-v3-5`. | [Detailed view](#-available-suno-ai-models)
 
 `generate()`
 - <b>Arguments</b>:
@@ -262,6 +262,7 @@ Models provided by Suno AI to Generate music.
       "tags": "relaxing, instrumental",
       "title": "Ocean Waves",
       "make_instrumental": true,
+      "model_version": "chirp-v3-5",
       "wait_audio": true
     }
     ```
