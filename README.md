@@ -47,7 +47,7 @@ Just right click & open Inspect. Filter : `_clerk_js_version`
 
 Set this cookie as `SUNO_COOKIE` environment variable or initialize the library as shown below.
 
-```
+```python
 from suno import Suno, ModelVersions
 client = Suno(
   cookie='YOUR_COOKIE_HERE',
@@ -57,7 +57,7 @@ client = Suno(
 ## 💾 Installation
 Install the library using pip: 
 
-```
+```shell
 pip install SunoAI
 ```
 
@@ -80,7 +80,7 @@ Set `SUNO_COOKIE` as an Environmental variable before deploy. -  [Instructions](
 
 ### Deploy on Local or VPS
 
-```
+```shell
 export SUNO_COOKIE="YOUR_COOKIE_HERE"
 git clone git@github.com:Malith-Rukshan/Suno-API.git
 pip3 install -r requirements.txt
@@ -94,7 +94,7 @@ fastapi run api.py --port 8080
 [![Example Usage Bot](https://img.shields.io/badge/Example-Telegram--BOT-0066FF?logo=probot&style=flat)](https://github.com/Malith-Rukshan/Suno-AI-BOT)
 
 **⚡️ Quick Start :**
-```
+```python
 from suno import Suno, ModelVersions
 client = Suno(
   cookie='YOUR_COOKIE_HERE',
@@ -128,7 +128,7 @@ for song in songs:
 - <b>Returns</b>: A list of `Clip` objects containing song data with IDs.
 - <b>Example:</b>
   - **By Description**
-    ```
+    ```python
     clips = client.generate(
       prompt="A peaceful melody reflecting a serene landscape",
       is_custom=False,
@@ -137,7 +137,7 @@ for song in songs:
     print(clips)
     ```
   - **By Lyrics - Custom**
-    ```
+    ```python
     clips = client.generate(
       prompt="I found a love, for me\nDarling, just dive right in and follow my lead\nWell, I found a girl, beautiful and sweet\nOh, I never knew you were the someone waiting for me...",
       tags="English men voice",
@@ -157,7 +157,7 @@ for song in songs:
   - <b>song_ids</b> (Optional[str]): A list of song IDs to fetch specific songs.
 - <b>Returns</b>: A list of `Clip` objects representing the retrieved songs.
 - Example:
-    ```
+    ```python
     songs = client.get_songs(song_ids="123,456")
     print(songs)
     ```
@@ -168,16 +168,14 @@ for song in songs:
 - **Returns** (bool): Status of the public visibility of the song. True if the song is public, False if private.
 - **Example**:
 ```python
-response = client.set_visibility(
-  song_id="uuid-type-songid-1234",
-  is_public=False)
+response = client.set_visibility(song_id="uuid-type-songid-1234", is_public=False)
 print(response)
 ```
 
 `get_credits()`
 - Returns: Current billing and credits information as a `CreditsInfo` object.
 - Example:
-    ```
+    ```python
     credits_info = client.get_credits()
     print(credits_info)
     ```
@@ -191,7 +189,7 @@ print(response)
   - TypeError: If the song argument is neither a string ID nor a Clip object.
   - Exception: If the download fails due to issues like an invalid URL or network errors.
 - Example:
-    ```
+    ```python
     # Using a song ID
     file_path = client.download(song="uuid-type-songid-1234")
     print(f"Song downloaded to: {file_path}")
@@ -209,7 +207,7 @@ Models provided by Suno AI to Generate music.
   - **CHIRP_V2_0** - `chirp-v2-0` : Vintage Suno model, max 1.3 minutes.
   
   Example How to use:
-  ```
+  ```python
   from suno import Suno, ModelVersions
   
   client = Suno(model_version=ModelVersions.CHIRP_V3_5)
@@ -217,7 +215,7 @@ Models provided by Suno AI to Generate music.
 
   or
 
-  ```
+  ```python
   from suno import Suno
 
   client = Suno(model_version='chirp-v3-5')
@@ -267,7 +265,7 @@ Models provided by Suno AI to Generate music.
 `POST /generate`
 
   - **Request Body:**
-    ```
+    ```json
     {
       "prompt": "A serene melody about the ocean",
       "is_custom": false,
@@ -283,7 +281,7 @@ Models provided by Suno AI to Generate music.
     <details>
     <summary>Click to view</summary>
     
-    ```
+    ```json
     [
         {
             "id": "124b735f-7fb0-42b9-8b35-761aed65a7f6",
@@ -331,7 +329,7 @@ Models provided by Suno AI to Generate music.
 `POST /songs`
 
   - **Request Body:**
-    ```
+    ```json
     {
       "song_ids": "uuid-format-1234,4567-abcd"
     }
@@ -344,7 +342,7 @@ Models provided by Suno AI to Generate music.
 `POST /get_song`
 
   - **Request Body:**
-    ```
+    ```json
     {
       "song_id": "uuid-song-id"
     }
@@ -357,7 +355,7 @@ Models provided by Suno AI to Generate music.
 `GET /credits`
 
   - **Response:**
-    ```
+    ```json
     {
       "credits_left": 50,
       "period": "2024-05",
