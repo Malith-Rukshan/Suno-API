@@ -132,7 +132,7 @@ class Suno():
 
         response = self.client.post(
             f"{Suno.BASE_URL}/api/generate/v2/", json=payload)
-        logger.info(response.text)
+        logger.debug(response.text)
 
         self._cehck_error(response)
 
@@ -191,7 +191,7 @@ class Suno():
             url += f"?ids={songIds}"
         logger.info("Getting Songs Info...")
         response = self.client.get(url)  # Call API
-        logger.info(response.text)
+        logger.debug(response.text)
         self._cehck_error(response)
         return response_to_clips(response.json())
 
@@ -209,7 +209,7 @@ class Suno():
         logger.info("Getting Song Info...")
         response = self.client.get(
             f"{Suno.BASE_URL}/api/feed/?ids={id}")  # Call API
-        logger.info(response.text)
+        logger.debug(response.text)
         self._cehck_error(response)
         return create_clip_from_data(response.json()[0])
     
@@ -230,7 +230,7 @@ class Suno():
         }
         response = self.client.post(
             f"{Suno.BASE_URL}/api/gen/{song_id}/set_visibility/", json=payload)
-        logger.info(response.text)
+        logger.debug(response.text)
         if response.status_code == 200:
             data = response.json()
             return data["is_public"]
@@ -243,7 +243,7 @@ class Suno():
         logger.info("Credits Info...")
         response = self.client.get(
             f"{Suno.BASE_URL}/api/billing/info/")  # Call API
-        logger.info(response.text)
+        logger.debug(response.text)
         self._cehck_error(response)
         if response.status_code == 200:
             data = response.json()
