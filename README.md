@@ -350,6 +350,22 @@ Models provided by Suno AI to Generate music.
   - **Response:**
     Just Clip Response - Same to `/generate` Response but Only Clip
 
+`POST /set_visibility`
+
+  - **Request Body:**
+    ```json
+    {
+      "song_id": "uuid-song-id",
+      "is_public": true
+    }
+    ```
+  - **Response:**
+    ```json
+    {
+      "is_public": true
+    }
+    ```
+
 **4. Retrieve Credit Information**
 
 `GET /credits`
