@@ -212,6 +212,30 @@ class Suno():
         logger.info(response.text)
         self._cehck_error(response)
         return create_clip_from_data(response.json()[0])
+    
+    def set_visibility(self, song_id: str, is_public: bool) -> bool:
+        """
+        Set the visibility of a song to public or private.
+
+        Parameters:
+        - song_id (str): The ID of the song to update.
+        - is_public (bool): A string indicating whether the song should be public (True) or private (False).
+
+        Returns:
+        bool: Status of the public visibility of the song. True if the song is public, False if private.
+        """
+        self._keep_alive()  # Ensure session is active
+        payload = {
+            "is_public": is_public
+        }
+        response = self.client.post(
+            f"{Suno.BASE_URL}/api/gen/{song_id}/set_visibility/", json=payload)
+        logger.info(response.text)
+        if response.status_code == 200:
+            data = response.json()
+            return data["is_public"]
+        else:
+            raise Exception(f"Error setting visibility: {response.text}")
 
     def get_credits(self) -> CreditsInfo:
         """Retrieve current billing and credits information."""

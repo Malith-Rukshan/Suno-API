@@ -83,6 +83,9 @@ def generate(song_id: str) -> JSONResponse:
     clip = client.get_song(song_id)
     return JSONResponse(content=clip.model_dump())
 
+@app.post(f"/set_visibility")
+def set_visibility(song_id: str, is_public: bool) -> JSONResponse:
+    return JSONResponse(content=dict(is_public=client.set_visibility(song_id, is_public)))
 
 @app.get(f"/credits", response_model=CreditsInfo)
 def credits() -> JSONResponse:

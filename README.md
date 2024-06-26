@@ -161,6 +161,18 @@ for song in songs:
     songs = client.get_songs(song_ids="123,456")
     print(songs)
     ```
+`set_visibility()`
+- **Arguments**:
+  - **song_id** (str): The ID of the song to update.
+  - **is_public** (bool): A string indicating whether the song should be public (True) or private (False).
+- **Returns** (bool): Status of the public visibility of the song. True if the song is public, False if private.
+- **Example**:
+```python
+response = client.set_visibility(
+  song_id="uuid-type-songid-1234",
+  is_public=False)
+print(response)
+```
 
 `get_credits()`
 - Returns: Current billing and credits information as a `CreditsInfo` object.
