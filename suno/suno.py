@@ -257,10 +257,11 @@ class Suno():
         else:
             raise Exception(f"Error retrieving credits: {response.text}")
 
-    def _get_dl_path(self, id: str, path: str) -> str:
+    def _get_dl_path(self, song: Clip, path: str) -> str:
         output_dir = pathlib.Path(path)
         output_dir.mkdir(parents=True, exist_ok=True)
-        return output_dir / f"SunoMusic-{id}.mp3"
+        song_name = song.title.replace("/", "-")
+        return output_dir / f"{song_name} - {song.id}.mp3"
 
     def download(self, song: str | Clip, path: str = "./downloads",) -> str:
         """
@@ -282,7 +283,8 @@ class Suno():
             url = song.audio_url
         elif isinstance(song, str):
             id = song
-            url = self.get_song(id).audio_url
+            song = self.get_song(id)
+            url = song.audio_url
         else:
             raise TypeError
         logger.info(f"Audio URL : {url}")
@@ -293,7 +295,7 @@ class Suno():
             )
         response = requests.get(url, stream=True)
         response.raise_for_status()  # Check for HTTP errors
-        filename = self._get_dl_path(id, path)
+        filename = self._get_dl_path(song, path)
         with open(filename, 'wb') as f:
             for chunk in response.iter_content(chunk_size=1024):
                 if chunk:  # Filter out keep-alive chunks
