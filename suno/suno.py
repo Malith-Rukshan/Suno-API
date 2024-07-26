@@ -6,7 +6,7 @@ import pathlib
 import random
 import time
 import logging
-from typing import List, Optional
+from typing import List, Optional, Tuple
 import requests
 
 from .models import ModelVersions, Clip, CreditsInfo
@@ -87,7 +87,7 @@ class Suno():
         # Set New Token to Headers
         self.client.headers['Authorization'] = f"Bearer {new_token}"
 
-    def _cehck_error(self, response):
+    def _check_for_error(self, response):
         try:
             resp = response.json()
             if resp['detail']:
@@ -134,7 +134,7 @@ class Suno():
             f"{Suno.BASE_URL}/api/generate/v2/", json=payload)
         logger.debug(response.text)
 
-        self._cehck_error(response)
+        self._check_for_error(response)
 
         if response.status_code != 200:
             logger.error("Audio Generate Failed ⁉️")
@@ -167,7 +167,7 @@ class Suno():
         logger.info("Generated Audio Successfully ✅")
         return last_clips
 
-    def get_songs(self, song_ids: List[str] | str = None) -> List[Clip]:
+    def get_songs(self, song_ids: List[str] | str = None, page: int = 0) -> Tuple[List[Clip], int]:
         """
         Retrieve songs from the library. If song IDs are provided, fetches specific songs; otherwise, retrieves a general list of songs.
 
@@ -182,7 +182,7 @@ class Suno():
         - To retrieve a list of all songs in the library: get_songs()
         """
         self._keep_alive()  # Ensure session is active
-        url = f"{Suno.BASE_URL}/api/feed/"
+        url = f"{Suno.BASE_URL}/api/feed/v2?page={page}"
         if song_ids:
             if isinstance(song_ids, list):
                 songIds = ",".join(song_ids)
@@ -192,8 +192,9 @@ class Suno():
         logger.info("Getting Songs Info...")
         response = self.client.get(url)  # Call API
         logger.debug(response.text)
-        self._cehck_error(response)
-        return response_to_clips(response.json())
+        self._check_for_error(response)
+        resp = response.json()
+        return response_to_clips(resp["clips"]), resp["num_total_results"]
 
     def get_song(self, id: str) -> Clip:
         """
@@ -210,7 +211,7 @@ class Suno():
         response = self.client.get(
             f"{Suno.BASE_URL}/api/feed/?ids={id}")  # Call API
         logger.debug(response.text)
-        self._cehck_error(response)
+        self._check_for_error(response)
         return create_clip_from_data(response.json()[0])
     
     def set_visibility(self, song_id: str, is_public: bool) -> bool:
@@ -244,7 +245,7 @@ class Suno():
         response = self.client.get(
             f"{Suno.BASE_URL}/api/billing/info/")  # Call API
         logger.debug(response.text)
-        self._cehck_error(response)
+        self._check_for_error(response)
         if response.status_code == 200:
             data = response.json()
             result = {

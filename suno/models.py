@@ -1,7 +1,7 @@
 # © [2024] Malith-Rukshan. All rights reserved.
 # Repository: https://github.com/Malith-Rukshan/Suno-API
 
-
+from typing import List
 from pydantic import BaseModel, ConfigDict
 
 class ModelVersions:
@@ -17,17 +17,27 @@ class ModelVersions:
     CHIRP_V3_5 = "chirp-v3-5"
     AVAILABLE_MODELS = [CHIRP_V2_0, CHIRP_V3_0, CHIRP_V3_5]
 
+class ClipMetadataHistory(BaseModel):
+    id: str | None = None
+    type: str | None = None
+    infill: bool | None = None
+    source: str | None = None
+    continue_at: float | None = None
+
 class ClipMetadata(BaseModel):
     tags: str | None = None
     prompt: str | None = None
     gpt_description_prompt: str | None = None
     audio_prompt_id: str | None = None
-    history: str | None = None
+    history: List[ClipMetadataHistory] | None = None
     concat_history: str | None = None
+    stem_from_id: str | None = None
     type: str | None = None
     duration: float | None = None
     refund_credits: float | None = None
     stream: bool | None = None
+    infill: bool | None = None
+    is_audio_upload_tos_accepted: bool | None = None
     error_type: str | None = None
     error_message: str | None = None
 
@@ -62,39 +72,68 @@ class Clip(BaseModel):
         protected_namespaces = ()
         json_schema_extra = {
             "example": {
-                "id": "124b735f-7fb0-42b9-8b35-761aed65a7f6",
-                "video_url": "",
-                "audio_url": "https://audiopipe.suno.ai/?item_id=124b735f-7fb0-42b9-8b35-761aed65a7f6",
-                "image_url": "https://cdn1.suno.ai/image_124b735f-7fb0-42b9-8b35-761aed65a7f6.png",
-                "image_large_url": "https://cdn1.suno.ai/image_large_124b735f-7fb0-42b9-8b35-761aed65a7f6.png",
+                "id": "aaaaaaaa-aaaa-aaaa-aaaaaaaaaaaaa",
+                "video_url": "https://cdn1.suno.ai/aaaaaaaa-aaaa-aaaa-aaaaaaaaaaaaa.mp4",
+                "audio_url": "https://cdn1.suno.ai/aaaaaaaa-aaaa-aaaa-aaaaaaaaaaaaa.mp3",
+                "image_url": "https://cdn2.suno.ai/image_aaaaaaaa-aaaa-aaaa-aaaaaaaaaaaaa.jpeg",
+                "image_large_url": "https://cdn2.suno.ai/image_large_aaaaaaaa-aaaa-aaaa-aaaaaaaaaaaaa.jpeg",
                 "is_video_pending": False,
-                "major_model_version": "v3",
+                "major_model_version": "v3.5",
                 "model_name": "chirp-v3",
                 "metadata": {
-                    "tags": "English men voice",
-                    "prompt": "I found a love, for me\nDarling, just dive right in and follow my lead\nWell, I found a girl, beautiful and sweet\nOh, I never knew you were the someone waiting for me\n\n′Cause we were just kids when we fell in love\nNot knowing what it was\nI will not give you up this time\nBut darling, just kiss me slow\nYour heart is all I own\nAnd in your eyes, you're holding mine\n\nBaby, I′m dancing in the dark\nWith you between my arms\nBarefoot on the grass\nListening to our favourite song\nWhen you said you looked a mess\nI whispered underneath my breath\nBut you heard it\nDarling, you look perfect tonight",
+                    "tags": "chuu chuu chuu, groovy, funky, pop, upbeat, funk, progressive",
+                    "prompt": "",
                     "gpt_description_prompt": None,
-                    "audio_prompt_id": None,
-                    "history": None,
+                    "audio_prompt_id": "aaaaaaaa-aaaa-aaaa-aaaaaaaaaaaaa",
+                    "history": [
+                    {
+                        "id": "aaaaaaaa-aaaa-aaaa-aaaaaaaaaaaaa",
+                        "type": "upload",
+                        "infill": False,
+                        "source": "web",
+                        "continue_at": 46.83755102040816
+                    },
+                    {
+                        "id": "aaaaaaaa-aaaa-aaaa-aaaaaaaaaaaaa",
+                        "type": "gen",
+                        "infill": False,
+                        "source": "web",
+                        "continue_at": 192.96
+                    }
+                    ],
                     "concat_history": None,
+                    "stem_from_id": None,
                     "type": "gen",
-                    "duration": None,
-                    "refund_credits": None,
+                    "duration": 12.34,
+                    "refund_credits": False,
                     "stream": True,
+                    "infill": False,
+                    "has_vocal": False,
+                    "is_audio_upload_tos_accepted": True,
                     "error_type": None,
                     "error_message": None
                 },
-                "is_liked": False,
-                "user_id": "2340653f-32cb-4343-artb-09203ty749e9",
-                "display_name": "Snonymous",
-                "handle": "anonymous",
+                "is_liked": True,
+                "user_id": "aaaaaaa-aaaa-aaaa-aaaaaaaaaaaaaaa",
+                "display_name": "demo",
+                "handle": "demo",
                 "is_handle_updated": False,
+                "avatar_image_url": "https://cdn1.suno.ai/defaultPink.webp",
                 "is_trashed": False,
-                "reaction": None,
-                "created_at": "2024-05-05T11:54:09.356Z",
-                "status": "streaming",
-                "title": "Perfect by Malith-Rukshan/Suno-API",
-                "play_count": 0,
+                "reaction": {
+                    "clip": None,
+                    "play_count": 7,
+                    "skip_count": 0,
+                    "flagged": False,
+                    "flagged_reason": None,
+                    "feedback_reason": None,
+                    "reaction_type": None,
+                    "updated_at": "2099-08-01T12:00:00.000Z"
+                },
+                "created_at": "2099-08-01T10:00:00.000Z",
+                "status": "complete",
+                "title": "demo",
+                "play_count": 7,
                 "upvote_count": 0,
                 "is_public": False
             }
