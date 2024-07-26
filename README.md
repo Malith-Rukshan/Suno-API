@@ -155,11 +155,24 @@ for song in songs:
 `get_songs()`
 - <b>Arguments</b>:
   - <b>song_ids</b> (Optional[str]): A list of song IDs to fetch specific songs.
-- <b>Returns</b>: A list of `Clip` objects representing the retrieved songs.
+  - <b>page</b> (Optional[int]): The page you want to fetch.
+- <b>Returns</b>:
+  - <b>A list of `Clip` objects representing the retrieved songs.</b>
+  - <b>Amount of songs in your library</b>
 - Example:
     ```python
-    songs = client.get_songs(song_ids="123,456")
+    songs, _ = client.get_songs(song_ids="123,456")
     print(songs)
+    ```
+- Note: By default you will only get around 15-20 songs per "page" of the API, so you need to iterate through the pages to get all the songs available to you.
+    ```python
+    songs_in_suno, songs_total = self.client.get_songs()
+    page = 0
+    while len(songs_in_suno) < songs_total:
+      page = page + 1
+      new_songs, _ = self.client.get_songs(page=page)
+      for s in new_songs:
+        songs_in_suno.append(s)
     ```
 `set_visibility()`
 - **Arguments**:
