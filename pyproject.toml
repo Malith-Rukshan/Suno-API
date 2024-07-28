@@ -1,0 +1,17 @@
+[project]
+name = "SunoAPI"
+version = "v1.0.8"
+authors = [
+  { name="Malith Rukshan" },
+]
+description = "Suno API Python Wrapper"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/Malith-Rukshan/Suno-API"
+Issues = "https://github.com/Malith-Rukshan/Suno-API/issues"
